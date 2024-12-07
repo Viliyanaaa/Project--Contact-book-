@@ -1,0 +1,156 @@
+task 3 - contact book
+
+contactlist = []
+
+
+def menu(call):
+    print("1. Add contact")
+    print("2. Edit contact")
+    print("3. Delete contact")
+    print("4. Search contact")
+    print("5. View all contacts")
+    print("6. Import contacts")
+    print("7. Export contacts")
+    print("8. Exit")
+
+
+def add():
+    name = input("Enter contact name: ")
+    name.title()
+    surname = input("Enter contact surname: ")
+    surname.title()
+    phone = int(input("Enter contact phonenumber: "))
+    email = input("Enter contact email: ")
+    birthday = input("Enter contact birthday(use / between day, month and year): ")
+    for i in contactlist:
+        if i['name'] == name:
+            print("This contact exist already")
+            return
+    i = {'name': name, 'surname': surname, 'phone': phone, 'email': email, 'birthday': birthday}
+    contactlist.append(i)
+    print("The new contact is added successfully!")
+
+
+def edit(contactlist, name):
+    for i in contactlist:
+        if i['name'] == name:
+            print(f"name: {i['name']}, surname: {i['surname']}, phone: {i['phone']}, email: {i['email']}, birthday: {i['birthday']}")
+            print("What do you want to change about this contact?")
+            print("1. Name")
+            print("2. Surname")
+            print("3. Phone")
+            print("4. Email")
+            print("5. Birthday")
+
+            choise = int(input("Choose a number between 1 and 5: "))
+
+            if choise == 1:
+                name = input("Enter the new name: ")
+                i['name'] = name
+                print("The name of the contact is changed successfully!")
+            elif choise == 2:
+                surname = input("Enter the new surname: ")
+                i['surname'] = surname
+                print("The surname of the contact is changed successfully!")
+            elif choise == 3:
+                phone = int(input("Enter the new phone number: "))
+                i['phone'] = phone
+                print("The phone of the contact is changed successfully!")
+            elif choise == 4:
+                email = input("Enter the new email: ")
+                i['email'] = email
+                print("The new email of the contact is changed successfully!")
+            elif choise == 5:
+                birthday = input("Enter the new birthday: ")
+                i['birhtday'] = birthday
+                print("The birthday of the contact is changed successfully!")
+            else:
+                print("Invalid input")
+
+        else:
+            print("The contact is not found")
+
+
+def delete():
+    for i in contactlist:
+        if i['name'] == name and i['surname'] == surname and i['phone'] == phone and i['email'] == email and i['birthday'] == birthday:
+            contactlist.remove(i)
+            print("The contact was deleted successfully!")
+        else:
+            print("The contact is not found")
+
+
+def search():
+    for i in contactlist:
+        if i['name'] == name or i['surname'] == surname or i['phone'] == phone or i['email'] == email or i['birthday'] == birthday:
+            print(i)
+        else:
+            print("This contact does not exist")
+
+
+def view_all(contactlist):
+    print(contactlist)
+
+
+filename = "contacts.txt"
+def import_contacts(contactlist, filename):
+    file = open('contacts.txt', "w")
+    line = ' '
+    for i in contactlist:
+        line = line + (str(i) + ',')
+    file.write(line[0:-1])
+    file.close
+
+    file = open('contacts.txt', "r")
+    contactlist = file.readline
+    print("The contacts are imported successfully!")
+
+def export_contacts(contactlist, filename):
+    file = open('contacts.txt', 'w', )
+    for i in contactlist:
+        file.write(f"{i['name']}, {i['surname']}, {i['phone']}, {i['email']}, {i['birthday']}\n")
+    file.close
+    print("The contacts are exported successfully!")
+
+
+menu(print())
+operation = int(input("Choose an operation between 1 and 8: "))
+while operation != 8:
+    if operation == 1:
+        add()
+        menu(print())
+        operation = int(input("Choose an operation between 1 and 8: "))
+    elif operation == 2:
+        name = input("enter the name of the contact, that you want to edit: ")
+        name.title()
+        edit(contactlist, name)
+        menu(print())
+        operation = int(input("Choose an operation between 1 and 8: "))
+    elif operation == 3:
+        name = input("Enter the name of the contact, that you want to delete: ")
+        name.title()
+        delete()
+        menu(print())
+        operation = int(input("Choose an operation between 1 and 8: "))
+    elif operation == 4:
+        name = input("Enter the name of the contact, that you search for: ")
+        name.title()
+        search()
+        menu(print())
+        operation = int(input("Choose an operation between 1 and 8: "))
+    elif operation == 5:
+        view_all(contactlist)
+        menu(print())
+        operation = int(input("Choose an operation between 1 and 8: "))
+    elif operation == 6:
+        import_contacts(contactlist, filename)
+        menu(print())
+        operation = int(input("Choose an operation between 1 and 8: "))
+    elif operation == 7:
+        export_contacts(contactlist, filename)
+        menu(print())
+        operation = int(input("Choose an operation between 1 and 8: "))
+    elif operation == 8:
+        break
+    else:
+        print("Invalid input")
